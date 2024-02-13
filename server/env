@@ -1,5 +1,0 @@
-EMAIL = testuser@gmail.com
-PASSWORD = testuser123
-jwt_secret = secret
-PORT = 5000
-mongo_url = mongodb+srv://admin:123password@busprojectdatabase.wqutfuh.mongodb.net/?retryWrites=true&w=majority

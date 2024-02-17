@@ -1,3 +1,18 @@
+# Must do this before starting the software: 
+1. Create a file in the "server" directory named ".env"
+2. Paste into the file:
+EMAIL = testuser@gmail.com
+PASSWORD = testuser123
+jwt_secret = secret
+PORT = 5000
+mongo_url = mongodb+srv://admin:123password@busprojectdatabase.wqutfuh.mongodb.net/?retryWrites=true&w=majority
+3. Save the file
+4. Go to MongoDB database
+5. Add your IP address to the whitelist, or else your computer won't be able to connect to the database 
+
+
+original description: 
+
 # MERN Stack Bus Ticket Booking App
 
 ### This website will include the following features :

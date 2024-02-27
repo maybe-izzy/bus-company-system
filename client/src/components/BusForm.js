@@ -131,8 +131,8 @@ function BusForm({
                 <option value="">From</option>
                 {cities.map((data, index) => {
                   return (
-                    <option key={index} value={data.ville}>
-                      {data.ville}
+                    <option key={index} value={data.location_name}>
+                      {data.location_name}
                     </option>
                   );
                 })}
@@ -155,8 +155,8 @@ function BusForm({
                 <option value="">To</option>
                 {cities.map((data, index) => {
                   return (
-                    <option key={index} value={data.ville}>
-                      {data.ville}
+                    <option key={index} value={data.location_name}>
+                      {data.location_name}
                     </option>
                   );
                 })}

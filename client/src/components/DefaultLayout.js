@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function DefaultLayout({ children }) {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
   const { user } = useSelector((state) => state.users);
 
   const userMenu = [
@@ -62,21 +61,6 @@ function DefaultLayout({ children }) {
       <div className="h-screen sticky top-0 flex flex-col bg-gray-800 shadow justify-start px-5 py-0 ">
         <div className="flex flex-col justify-start items-center p-5">
           <div className="bg-gray-800 w-full ">
-            {collapsed ? (
-              <i
-                className="ri-menu-2-fill cursor-pointer text-[30px] text-white"
-                onClick={() => {
-                  setCollapsed(false);
-                }}
-              ></i>
-            ) : (
-              <i
-                className="ri-close-line cursor-pointer text-[30px] text-white"
-                onClick={() => {
-                  setCollapsed(true);
-                }}
-              ></i>
-            )}
           </div>
         </div>
 
@@ -96,7 +80,7 @@ function DefaultLayout({ children }) {
                   className={`${item.icon} text-white text-[20px] group-hover:text-black`}
                 ></i>
 
-                {!collapsed && (
+                {(
                   <span
                     onClick={() => {
                       if (item.path === "/logout") {

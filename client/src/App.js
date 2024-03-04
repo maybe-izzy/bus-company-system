@@ -7,7 +7,7 @@ import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 
-const Index = lazy(() => import("./pages/Index"));
+//const Index = lazy(() => import("./pages/Index"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const AdminBookings = lazy(() => import("./pages/Admin/AdminBookings"));
@@ -29,11 +29,11 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
-            <Route
-              path="/"
-              element={
+          <Route
+               path="/"
+               element={
                 <PublicRoute>
-                  <Index />
+                  <Login />
                 </PublicRoute>
               }
             />
@@ -124,15 +124,6 @@ function App() {
                 <ProtectedRoute>
                   <AdminUsers />
                 </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
               }
             />
             <Route

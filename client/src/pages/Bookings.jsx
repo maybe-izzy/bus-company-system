@@ -6,7 +6,6 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import PageTitle from "../components/PageTitle";
 import moment from "moment";
 import { useReactToPrint } from "react-to-print";
-import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
 import QRCode from "react-qr-code";
 
@@ -172,9 +171,6 @@ function Bookings() {
                       <div className="flex-auto justify-evenly">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center my-1">
-                            <span className="mr-3 rounded-full bg-white w-8 h-8">
-                              <img alt="logo" src={logo} className="h-8 p-1" />
-                            </span>
                             <h2 className="font-medium">
                               {selectedBooking?.name}
                             </h2>
@@ -193,9 +189,6 @@ function Bookings() {
                             <div className="text-xs">
                               {selectedBooking?.from}
                             </div>
-                          </div>
-                          <div className="flex flex-col mx-auto">
-                            <img src={logo} alt="logo" className="w-20 p-1" />
                           </div>
                           <div className="flex flex-col ">
                             <div className="flex-auto text-xs text-gray-400 my-1"></div>

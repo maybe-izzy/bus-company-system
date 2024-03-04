@@ -1,4 +1,3 @@
-import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
@@ -78,11 +77,6 @@ function Index() {
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md ">
             <div className="flex justify-center">
-              <img
-                className=" text-center w-20 h-20 rounded-full"
-                src={logo}
-                alt="logo"
-              />
             </div>
 
             <h1 className="mb-5 text-5xl text-white font-bold ">

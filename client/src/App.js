@@ -75,7 +75,7 @@ function App() {
             />
 
             <Route
-              path="/easy-booking"
+              path="/bussin"
               element={
                 <ProtectedRoute>
                   <Home />

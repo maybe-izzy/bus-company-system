@@ -9,7 +9,7 @@ function DefaultLayout({ children }) {
   const userMenu = [
     {
       name: "Home",
-      path: "/easy-booking",
+      path: "/bussin",
       icon: "ri-home-line",
     },
     {
@@ -26,7 +26,7 @@ function DefaultLayout({ children }) {
   const adminMenu = [
     {
       name: "Home",
-      path: "/easy-booking",
+      path: "/bussin",
       icon: "ri-home-line",
     },
     {
@@ -53,7 +53,7 @@ function DefaultLayout({ children }) {
   const menutoBeRendered = user?.isAdmin ? adminMenu : userMenu;
   let activeRoute = window.location.pathname;
   if (window.location.pathname.includes("book-now")) {
-    activeRoute = "/easy-booking";
+    activeRoute = "/bussin";
   }
 
   return (

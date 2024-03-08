@@ -2,13 +2,14 @@ const User = require("../models/usersModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const PasswordReset = require("../models/passwordResetModel");
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
+/*
 // nodemailer transporter
 let transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "outlook",
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
@@ -24,7 +25,7 @@ transporter.verify((error, success) => {
     console.log(success);
   }
 });
-
+*/
 // register new user
 
 const CreateUser = async (req, res) => {

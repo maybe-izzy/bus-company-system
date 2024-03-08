@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/img/logo.png";
 
 function DefaultLayout({ children }) {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
   const { user } = useSelector((state) => state.users);
 
   const userMenu = [
     {
       name: "Home",
-      path: "/easy-booking",
+      path: "/bussin",
       icon: "ri-home-line",
     },
     {
@@ -28,7 +26,7 @@ function DefaultLayout({ children }) {
   const adminMenu = [
     {
       name: "Home",
-      path: "/easy-booking",
+      path: "/bussin",
       icon: "ri-home-line",
     },
     {
@@ -55,7 +53,7 @@ function DefaultLayout({ children }) {
   const menutoBeRendered = user?.isAdmin ? adminMenu : userMenu;
   let activeRoute = window.location.pathname;
   if (window.location.pathname.includes("book-now")) {
-    activeRoute = "/easy-booking";
+    activeRoute = "/bussin";
   }
 
   return (
@@ -63,21 +61,6 @@ function DefaultLayout({ children }) {
       <div className="h-screen sticky top-0 flex flex-col bg-gray-800 shadow justify-start px-5 py-0 ">
         <div className="flex flex-col justify-start items-center p-5">
           <div className="bg-gray-800 w-full ">
-            {collapsed ? (
-              <i
-                className="ri-menu-2-fill cursor-pointer text-[30px] text-white"
-                onClick={() => {
-                  setCollapsed(false);
-                }}
-              ></i>
-            ) : (
-              <i
-                className="ri-close-line cursor-pointer text-[30px] text-white"
-                onClick={() => {
-                  setCollapsed(true);
-                }}
-              ></i>
-            )}
           </div>
         </div>
 
@@ -97,7 +80,7 @@ function DefaultLayout({ children }) {
                   className={`${item.icon} text-white text-[20px] group-hover:text-black`}
                 ></i>
 
-                {!collapsed && (
+                {(
                   <span
                     onClick={() => {
                       if (item.path === "/logout") {
@@ -123,12 +106,6 @@ function DefaultLayout({ children }) {
       </div>
       <div className="w-full">
         <div className="bg-gray-800 flex flex-col justify-start items-center py-2">
-          <img
-            onClick={() => navigate("/")}
-            src={logo}
-            alt="logo"
-            className="w-30 h-20 rounded-full cursor-pointer"
-          />
           <h1 className="text-white text-base mb-0 p-0 text-center ">
             <div className="mt-1">{user?.name} </div>
             <div className="mt-1">{user?.email}</div>

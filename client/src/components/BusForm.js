@@ -117,8 +117,8 @@ function BusForm({
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item
-              label="From"
-              name="from"
+              label="Start"
+              name="Start"
               rules={[
                 {
                   required: type === "add" ? true : true,
@@ -128,7 +128,7 @@ function BusForm({
               ]}
             >
               <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
-                <option value="">From</option>
+                <option value="">Select</option>
                 {cities.map((data, index) => {
                   return (
                     <option key={index} value={data.location_name}>
@@ -141,8 +141,8 @@ function BusForm({
           </Col>
           <Col lg={12} xs={24}>
             <Form.Item
-              label="To"
-              name="to"
+              label="Stop 1"
+              name="Stop1"
               rules={[
                 {
                   required: type === "add" ? true : true,
@@ -152,7 +152,79 @@ function BusForm({
               ]}
             >
               <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
-                <option value="">To</option>
+                <option value="">Select</option>
+                {cities.map((data, index) => {
+                  return (
+                    <option key={index} value={data.ville}>
+                      {data.ville}
+                    </option>
+                  );
+                })}
+              </select>
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24}>
+            <Form.Item
+              label="Stop 2"
+              name="Stop2"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
+              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
+                <option value="">Select</option>
+                {cities.map((data, index) => {
+                  return (
+                    <option key={index} value={data.ville}>
+                      {data.ville}
+                    </option>
+                  );
+                })}
+              </select>
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24}>
+            <Form.Item
+              label="Stop 3"
+              name="Stop3"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
+              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
+                <option value="">Select</option>
+                {cities.map((data, index) => {
+                  return (
+                    <option key={index} value={data.ville}>
+                      {data.ville}
+                    </option>
+                  );
+                })}
+              </select>
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={24}>
+            <Form.Item
+              label="End"
+              name="End"
+              rules={[
+                {
+                  required: type === "add" ? true : true,
+                  message: "Please Choose an option",
+                  validateTrigger: "onSubmit",
+                },
+              ]}
+            >
+              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
+                <option value="">Select</option>
                 {cities.map((data, index) => {
                   return (
                     <option key={index} value={data.location_name}>
@@ -251,7 +323,7 @@ function BusForm({
                 name=""
                 id=""
               >
-                <option value="Yet to start">Yet To Start</option>
+                <option value="Yet to Start">Yet to start</option>
                 <option value="Running">Running</option>
                 <option disabled value="Completed">
                   Completed

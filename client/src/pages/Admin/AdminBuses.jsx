@@ -57,12 +57,24 @@ function AdminBuses() {
       dataIndex: "busNumber",
     },
     {
-      title: "From",
-      dataIndex: "from",
+      title: "Start",
+      dataIndex: "Start",
     },
     {
-      title: "To",
-      dataIndex: "to",
+      title: "Stop 1",
+      dataIndex: "Stop1",
+    },
+    {
+      title: "Stop 2",
+      dataIndex: "Stop2",
+    },
+    {
+      title: "Stop 3",
+      dataIndex: "Stop3",
+    },
+    {
+      title: "End",
+      dataIndex: "End",
     },
     {
       title: "Journey Date",

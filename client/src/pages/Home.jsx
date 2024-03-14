@@ -13,10 +13,15 @@ function Home() {
   const [filters, setFilters] = useState({});
 
   const getBusesByFilter = useCallback(async () => {
+    console.log("bus"); 
     dispatch(ShowLoading());
     const from = filters.from;
     const to = filters.to;
     const journeyDate = filters.journeyDate;
+
+    console.log(journeyDate); 
+    console.log(from); 
+    console.log(to); 
     try {
       const { data } = await axiosInstance.post(
         `/api/buses/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
@@ -36,6 +41,7 @@ function Home() {
   }, []);
 
   useCallback(() => {
+    console.log("getting buses by filter"); 
     if (filters.from && filters.to && filters.journeyDate) {
       getBusesByFilter();
     }

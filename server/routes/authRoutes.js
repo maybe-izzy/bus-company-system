@@ -1,15 +1,11 @@
 const express = require("express");
-const router = express();
-const {
-  CreateUser,
-  Login,
-  ResetPassword,
-  UpdatePassword,
-} = require("../Controllers/authController");
+const router = express.Router(); // Use express.Router() for creating route handlers
+const AuthController = require("../Controllers/AuthManager");
+const authController = new AuthController();
 
-router.post("/create-user", CreateUser);
-router.post("/login", Login);
-router.post("/requestPasswordReset", ResetPassword);
-router.post("/resetPassword/:userId/:resetString", UpdatePassword);
+router.post("/create-user", (req, res) => authController.CreateUser(req, res));
+router.post("/login", (req, res) => authController.Login(req, res));
+router.post("/requestPasswordReset", (req, res) => authController.ResetPassword(req, res));
+router.post("/resetPassword/:userId/:resetString", (req, res) => authController.UpdatePassword(req, res));
 
 module.exports = router;

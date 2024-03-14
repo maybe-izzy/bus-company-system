@@ -1,21 +1,16 @@
 const express = require("express");
 const router = express();
-
-const {
-  AddBus,
-  GetAllBuses,
-  UpdateBus,
-  DeleteBus,
-  GetBusById,
-  GetBusesByFromAndTo,
-} = require("../Controllers/busController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const BusManager = require("../Controllers/BusManager");
 
-router.post("/add-bus", authMiddleware, AddBus);
-router.post("/get-all-buses", authMiddleware, GetAllBuses);
-router.put("/:id", authMiddleware, UpdateBus);
-router.delete("/:id", authMiddleware, DeleteBus);
-router.get("/:id", authMiddleware, GetBusById);
-router.post("/get", authMiddleware, GetBusesByFromAndTo);
+// Create an instance of the AuthController class
+const busManager = new BusManager();
+
+router.post("/add-bus", authMiddleware, (req, res) => busManager.AddBus(req, res));
+router.post("/get-all-buses", authMiddleware, (req, res) => busManager.GetAllBuses(req, res));
+router.put("/:id", authMiddleware, (req, res) => busManager.UpdateBus(req, res));
+router.delete("/:id", authMiddleware, (req, res) => busManager.DeleteBus(req, res));
+router.get("/:id", authMiddleware, (req, res) => busManager.GetBusById(req, res));
+router.post("/get", authMiddleware, (req, res) => busManager.GetBusesByFromAndTo(req, res));
 
 module.exports = router;

@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {
-  getAllClients,
-  GetUserById,
-} = require("../Controllers/usersController");
+const UserManager = require("../Controllers/UserManager");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-router.get("/get-all-users", authMiddleware, getAllClients);
-router.get("/:userId", GetUserById);
+const userManager = new UserManager();
+
+router.get("/get-all-users", authMiddleware, (req, res) => userManager.getAllClients(req, res));
+router.get("/:userId", (req, res) => userManager.GetUserById(req, res));
 
 module.exports = router;

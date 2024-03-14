@@ -17,6 +17,10 @@ const busSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  stops: {
+    type: Array, 
+    required: true, 
+  },
   departure: {
     type: String,
     required: true,

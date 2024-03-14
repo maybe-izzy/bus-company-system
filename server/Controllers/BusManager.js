@@ -61,11 +61,11 @@ class BusManager {
     }
   };
 
-  async FindAnyRoute(req, res){
+  async FindBusesWithStops(req, res){
     try {
       const buses = await Bus.find({
-        from: req.query.from,
-        to: req.query.to,
+        stops: req.query.from,
+        stops: req.query.to,
         journeyDate: req.query.journeyDate,
       });
 
@@ -103,10 +103,13 @@ class BusManager {
   async GetBusesByFromAndTo(req, res){
     try {
       const buses = await Bus.find({
-        from: req.query.from,
-        to: req.query.to,
+        stops: req.query.from,
+        stops: req.query.to,
         journeyDate: req.query.journeyDate,
       });
+
+      console.log("find by: " + req.query.from + " " + req.query.to); 
+
 
       buses.forEach(async (bus) => {
         const journey = new Date(bus.journeyDate);

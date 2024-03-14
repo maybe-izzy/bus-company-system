@@ -4,7 +4,7 @@ import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alertsSlice";
 import { useDispatch } from "react-redux";
 import { axiosInstance } from "../../helpers/axiosInstance";
-import { message, Table } from "antd";
+import { message, Tag, Table } from "antd";
 import { Helmet } from "react-helmet";
 
 function AdminBuses() {
@@ -64,6 +64,20 @@ function AdminBuses() {
       title: "To",
       dataIndex: "to",
     },
+    {
+      title: "Stops",
+      dataIndex: "stops",
+      render: (tags) => (
+        <>
+          {tags
+            .map((tag) => {
+              return <Tag key={tag}>{tag}</Tag>;
+            })
+            .reduce((prev, curr) => [prev, ", ", curr])}
+        </>
+      )
+    },
+     
     {
       title: "Journey Date",
       dataIndex: "journeyDate",

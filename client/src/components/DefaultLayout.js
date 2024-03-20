@@ -45,6 +45,11 @@ function DefaultLayout({ children }) {
       icon: "ri-file-list-line",
     },
     {
+      name: "Locations",
+      path: "/admin/locations",
+      icon: "ri-logout-box-line",
+    },
+    {
       name: "Logout",
       path: "/logout",
       icon: "ri-logout-box-line",

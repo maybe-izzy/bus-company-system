@@ -6,6 +6,7 @@ import Loader from "./components/Loader";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
+import AdminLocations from "./pages/Admin/AdminLocations";
 
 //const Index = lazy(() => import("./pages/Index"));
 const Login = lazy(() => import("./pages/Login"));
@@ -118,6 +119,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/admin/locations"
+              element={
+                <ProtectedRoute>
+                  <AdminLocations />
+                </ProtectedRoute>
+              }
+            />
+
             <Route
               path="/admin/users"
               element={

@@ -5,7 +5,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 const userManager = new UserManager();
 
-router.get("/get-all-users", authMiddleware, (req, res) => userManager.getAllClients(req, res));
+router.get("/get-all-users", authMiddleware, (req, res) => userManager.GetAllClients(req, res));
 router.get("/:userId", (req, res) => userManager.GetUserById(req, res));
 
 module.exports = router;

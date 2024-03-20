@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Modal, Row, Form, Col, message } from "antd";
+import { Modal, Row, Form, Col,Button,  message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 
@@ -13,19 +13,50 @@ function BusForm({
   setSelectedBus,
 }) {
   const dispatch = useDispatch();
-  const [cities, setCities] = useState([]);
+  const [busStops, setBusStops] = useState([]);
+
+  const addBusStop = () => {
+    // Ensure not to exceed 5 bus stops
+    if (busStops.length < 5) {
+      setBusStops([...busStops, { name: "", time: "" }]);
+    } else {
+      message.warning("You cannot add more than 5 bus stops.");
+    }
+  };
+
+  const removeBusStop = (index) => {
+    const newBusStops = [...busStops];
+    newBusStops.splice(index, 1);
+    setBusStops(newBusStops);
+  };
+
+  const handleBusStopChange = (index, field, value) => {
+    const newBusStops = [...busStops];
+    newBusStops[index][field] = value;
+    setBusStops(newBusStops);
+  };
+
 
   const onFinish = async (values) => {
+    if (busStops.length <= 1) {
+      // Display an error message if no bus stops are added
+      message.error('Please add at least two bus stops before submitting.');
+      return; // Stop the submission process
+    }
+
     try {
+      // Add the bus stops to the form values under the name "stops"
+      const updatedValues = {
+        ...values,
+        stops: busStops.map(stop => stop.name) // Assuming busStops is an array of objects with a 'name' property
+      };
+  
       dispatch(ShowLoading());
       let response = null;
       if (type === "add") {
-        response = await axiosInstance.post("/api/buses/add-bus", values);
+        response = await axiosInstance.post("/api/buses/add-bus", updatedValues);
       } else {
-        response = await axiosInstance.put(
-          `/api/buses/${selectedBus._id}`,
-          values
-        );
+        response = await axiosInstance.put(`/api/buses/${selectedBus._id}`, updatedValues);
       }
       if (response.data.success) {
         message.success(response.data.message);
@@ -41,12 +72,9 @@ function BusForm({
       dispatch(HideLoading());
     }
   };
+  
 
-  useEffect(() => {
-    axiosInstance.get("/api/cities/get-all-cities").then((response) => {
-      setCities(response.data.data);
-    });
-  }, []);
+
 
   return (
     <Modal
@@ -113,54 +141,6 @@ function BusForm({
                 type="number"
                 className="block border border-blue-500 w-full p-3 rounded-lg mb-4"
               />
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24}>
-            <Form.Item
-              label="From"
-              name="from"
-              rules={[
-                {
-                  required: type === "add" ? true : true,
-                  message: "Please Choose an option",
-                  validateTrigger: "onSubmit",
-                },
-              ]}
-            >
-              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
-                <option value="">From</option>
-                {cities.map((data, index) => {
-                  return (
-                    <option key={index} value={data.location_name}>
-                      {data.location_name}
-                    </option>
-                  );
-                })}
-              </select>
-            </Form.Item>
-          </Col>
-          <Col lg={12} xs={24}>
-            <Form.Item
-              label="To"
-              name="to"
-              rules={[
-                {
-                  required: type === "add" ? true : true,
-                  message: "Please Choose an option",
-                  validateTrigger: "onSubmit",
-                },
-              ]}
-            >
-              <select className="block border border-blue-500 w-full p-3 rounded-lg mb-4">
-                <option value="">To</option>
-                {cities.map((data, index) => {
-                  return (
-                    <option key={index} value={data.location_name}>
-                      {data.location_name}
-                    </option>
-                  );
-                })}
-              </select>
             </Form.Item>
           </Col>
           <Col lg={8} xs={24}>
@@ -259,6 +239,54 @@ function BusForm({
               </select>
             </Form.Item>
           </Col>
+        
+          {busStops.map((stop, index) => (
+          <Row key={index} gutter={[10, 10]}>
+            <Col lg={18} xs={18}>
+            <div key={index} className="flex flex-col mb-4">
+  <Form.Item
+    label={`Bus Stop #${index + 1}`}
+    name={`busStopName${index}`}
+    rules={[{ required: true, message: "Please input bus stop name!" }]}
+  >
+    <input
+      type="text"
+      className="block border border-blue-500 w-full p-3 rounded-lg"
+      value={stop.name}
+      onChange={(e) => handleBusStopChange(index, "name", e.target.value)}
+    />
+  </Form.Item>
+  <button
+    onClick={() => removeBusStop(index)}
+    className="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Remove
+  </button>
+</div>
+              
+            </Col>
+          </Row>
+        ))}
+
+        <Row>
+          <Col span={24}>
+          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-4">
+  <Button
+    onClick={addBusStop}
+    disabled={busStops.length >= 5}
+    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300"
+  >
+    Add Bus Stop
+  </Button>
+</div>
+</div>
+
+          </Col>
+        </Row>
+
+
+
         </Row>
         <div className="flex justify-end">
           <button

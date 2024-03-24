@@ -56,6 +56,7 @@ function BusForm({
       if (type === "add") {
         response = await axiosInstance.post("/api/buses/add-bus", updatedValues);
       } else {
+        console.log("hello");
         response = await axiosInstance.put(`/api/buses/${selectedBus._id}`, updatedValues);
       }
       if (response.data.success) {

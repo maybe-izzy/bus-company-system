@@ -34,7 +34,6 @@ class BusManager {
         if (departure.getTime() - new Date().getTime() < 3600000) {
           await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
         }
-        // console.log("departure time is : ", departure);
       });
 
       const orderedBuses = buses.sort((a, b) => {
@@ -103,12 +102,9 @@ class BusManager {
   async GetBusesByFromAndTo(req, res){
     try {
       const buses = await Bus.find({
-        stops: req.query.from,
-        stops: req.query.to,
         journeyDate: req.query.journeyDate,
-      });
-
-      console.log("find by: " + req.query.from + " " + req.query.to); 
+        stops: { $all: [req.query.from, req.query.to] } // Ensure both stops are present
+      }).lean();
 
 
       buses.forEach(async (bus) => {
@@ -124,9 +120,15 @@ class BusManager {
         }
       });
 
-      const filteredBuses = buses.filter(
-        (bus) => bus.status !== "Completed" && bus.status !== "Running"
-      );
+      const filteredBuses = buses.filter(bus => {
+        const fromIndex = bus.stops.indexOf(req.query.from);
+        const toIndex = bus.stops.indexOf(req.query.to);
+      
+        return ((bus.status !== "Completed") && (bus.status !== "Running") && 
+        (fromIndex < toIndex) && (fromIndex !== -1) && (toIndex !== -1));
+       
+      });
+
       res.status(200).send({
         message: "Buses fetched successfully",
         success: true,

@@ -12,6 +12,7 @@ function Home() {
   const [cities, setCities] = useState([]);
   const [filters, setFilters] = useState({});
 
+  /* Here */ 
   const getBusesByFilter = useCallback(async () => {
     console.log("bus"); 
     dispatch(ShowLoading());
@@ -35,7 +36,7 @@ function Home() {
   }, [filters, dispatch]);
 
   useEffect(() => {
-    axiosInstance.get("/api/cities/get-all-cities").then((response) => {
+    axiosInstance.post("/api/locations/get-all-locations").then((response) => {
       setCities(response.data.data);
     });
   }, []);

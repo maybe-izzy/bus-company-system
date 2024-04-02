@@ -9,23 +9,11 @@ const busSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  Start: {
+  from: {
     type: String,
     required: false,
   },
-  Stop1: {
-    type: String,
-    required: true,
-  },
-  Stop2: {
-    type: String,
-    required: true,
-  },
-  Stop3: {
-    type: String,
-    required: true,
-  },
-  End: {
+  to: {
     type: String,
     required: false,
   },

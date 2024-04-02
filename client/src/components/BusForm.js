@@ -292,7 +292,7 @@ useEffect(() => {
                 name=""
                 id=""
               >
-                <option value="Yet to Start">Yet to start</option>
+                <option value="Yet to start">Yet To Start</option>
                 <option value="Running">Running</option>
                 <option disabled value="Completed">
                   Completed

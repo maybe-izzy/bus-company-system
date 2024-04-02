@@ -1,4 +1,5 @@
 const Bus = require("../models/busModel");
+const moment = require('moment-timezone');
 
 // Add a new bus
 const AddBus = async (req, res) => {
@@ -22,19 +23,24 @@ const GetAllBuses = async (req, res) => {
   try {
     const buses = await Bus.find();
     buses.forEach(async (bus) => {
-      const journey = new Date(bus.journeyDate);
-
-      const departure = new Date(
-        `${journey.getFullYear()}-${
-          journey.getMonth() + 1
-        }-${journey.getDate()} ${bus.departure}`
-      );
-
-      if (departure.getTime() - new Date().getTime() < 3600000) {
+      const departure = moment.tz(`${bus.journeyDate} ${bus.stopTimes[0]}`, 'YYYY-MM-DD HH:mm', 'America/New_York');
+      const arrival = moment.tz(`${bus.journeyDate} ${bus.stopTimes[bus.stopTimes.length -1]}`, 'YYYY-MM-DD HH:mm', 'America/New_York');
+      const now = moment.tz('America/New_York'); // Current time in the same timezone as the departure and arrival
+    
+      // If the current time is after the departure time but before the arrival time, the bus is running
+      if (now.isAfter(departure) && now.isBefore(arrival)) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Running" });
+      }
+      // If the current time is after the arrival time, the journey has been completed
+      else if (now.isAfter(arrival)) {
         await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
       }
-      // console.log("departure time is : ", departure);
+      // Optionally handle the case where the bus has not yet departed
+      else if (now.isBefore(departure)) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Yet to start" });
+      }
     });
+    
 
     const orderedBuses = buses.sort((a, b) => {
       if (a.status === "Completed" && b.status !== "Completed") {
@@ -64,31 +70,58 @@ const GetAllBuses = async (req, res) => {
 const GetBusesByFromAndTo = async (req, res) => {
   try {
     const buses = await Bus.find({
-      from: req.query.from,
-      to: req.query.to,
       journeyDate: req.query.journeyDate,
-    });
-
+      stops: { $all: [req.query.from, req.query.to] } // Ensure bus has both stops in its route
+    }).lean();
+    
     buses.forEach(async (bus) => {
-      const journey = new Date(bus.journeyDate);
-      const departure = new Date(
-        `${journey.getFullYear()}-${
-          journey.getMonth() + 1
-        }-${journey.getDate()} ${bus.departure}`
-      );
-
-      if (departure.getTime() - new Date().getTime() < 3600000) {
+      const departure = moment.tz(`${bus.journeyDate} ${bus.stopTimes[0]}`, 'YYYY-MM-DD HH:mm', 'America/New_York');
+      const arrival = moment.tz(`${bus.journeyDate} ${bus.stopTimes[bus.stopTimes.length -1]}`, 'YYYY-MM-DD HH:mm', 'America/New_York');
+      const now = moment.tz('America/New_York'); // Current time in the same timezone as the departure and arrival
+    
+      // If the current time is after the departure time but before the arrival time, the bus is running
+      if (now.isAfter(departure) && now.isBefore(arrival)) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Running" });
+      }
+      // If the current time is after the arrival time, the journey has been completed
+      else if (now.isAfter(arrival)) {
         await Bus.findByIdAndUpdate(bus._id, { status: "Completed" });
+      }
+      // Optionally handle the case where the bus has not yet departed
+      else if (now.isBefore(departure)) {
+        await Bus.findByIdAndUpdate(bus._id, { status: "Yet to start" });
       }
     });
 
-    const filteredBuses = buses.filter(
-      (bus) => bus.status !== "Completed" && bus.status !== "Running"
-    );
+    const filteredBuses = buses.filter(bus => {
+      const fromIndex = bus.stops.indexOf(req.query.from);
+      const toIndex = bus.stops.indexOf(req.query.to);
+      return ((bus.status !== "Completed") && (bus.status !== "Running") && 
+      (fromIndex < toIndex) && (fromIndex !== -1) && (toIndex !== -1));
+    });
+    
+    
+  
+
+    const modifiedBuses = filteredBuses.map(bus => {
+      const fromIndex = bus.stops.indexOf(req.query.from);
+      const toIndex = bus.stops.indexOf(req.query.to);
+      // Create a new object with only the from and to fields added to the original bus object.
+      // This ensures that the original bus object is not mutated.
+      return {
+          bus: bus, 
+          from: req.query.from, 
+          to: req.query.to,
+          arrival: bus.stopTimes[bus.stops.indexOf(req.query.to)], 
+          departure: bus.stopTimes[bus.stops.indexOf(req.query.from)] 
+        
+      };
+    });
+   
     res.status(200).send({
       message: "Buses fetched successfully",
       success: true,
-      data: filteredBuses,
+      data: modifiedBuses,
     });
   } catch (error) {
     res.status(500).send({
@@ -103,12 +136,7 @@ const GetBusesByFromAndTo = async (req, res) => {
 const UpdateBus = async (req, res) => {
   // if the bus is completed , you can't update it
   const bus = await Bus.findById(req.params.id);
-  if (bus.status === "Completed") {
-    res.status(400).send({
-      message: "You can't update a completed bus",
-      success: false,
-    });
-  } else {
+  
     try {
       await Bus.findByIdAndUpdate(req.params.id, req.body);
       res.status(200).send({
@@ -122,7 +150,7 @@ const UpdateBus = async (req, res) => {
         data: error,
       });
     }
-  }
+  
 };
 
 // delete a bus

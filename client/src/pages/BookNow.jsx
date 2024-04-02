@@ -5,8 +5,8 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import { Row, Col, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import SeatSelection from "../components/SeatSelection";
-import StripeCheckout from "react-stripe-checkout";
 import { Helmet } from "react-helmet";
+import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 
 function BookNow() {
@@ -16,10 +16,16 @@ function BookNow() {
   const dispatch = useDispatch();
   const [bus, setBus] = useState(null);
 
+  // Access query parameters 
+  const from = params.fromLocation; 
+  const to = params.toLocation; 
+  const arrival = params.toTime; 
+  const departure = params.fromTime; 
+
   const getBus = useCallback(async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.get(`/api/buses/${params.id}`);
+      const response = await axiosInstance.get(`/api/buses/${params.id}`); 
       dispatch(HideLoading());
       if (response.data.success) {
         setBus(response.data.data);
@@ -27,20 +33,27 @@ function BookNow() {
         message.error(response.data.message);
       }
     } catch (error) {
+      console.log(params); 
       dispatch(HideLoading());
       message.error(error.message);
     }
   }, [dispatch, params.id]);
 
   const bookNow = async (transactionId) => {
+
     try {
+      console.log(arrival); 
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
         `/api/bookings/book-seat/${localStorage.getItem("user_id")}`,
         {
           bus: bus._id,
           seats: selectedSeats,
-          transactionId,
+          from, 
+          to, 
+          departure,
+          arrival,
+          transactionId
         }
       );
       dispatch(HideLoading());
@@ -56,21 +69,12 @@ function BookNow() {
     }
   };
 
-  const onToken = async (token) => {
+  const processBooking = async () => {
+    const transactionId = uuidv4();
+    
     try {
-      dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/bookings/make-payment", {
-        token,
-        amount: selectedSeats.length * bus.price,
-      });
-
-      dispatch(HideLoading());
-      if (response.data.success) {
-        message.success(response.data.message);
-        bookNow(response.data.data.transactionId);
-      } else {
-        message.error(response.data.message);
-      }
+      bookNow(transactionId);
+      
     } catch (error) {
       dispatch(HideLoading());
       message.error(error.message);
@@ -92,28 +96,35 @@ function BookNow() {
               <h1 className="font-extrabold text-2xl text-blue-500">
                 {bus.name}
               </h1>
-              <h1 className="text-2xl font-bold">
-                {bus.from} - {bus.to}
-              </h1>
+              
               <hr className="border-black" />
 
               <div className="flex flex-col gap-1 ">
                 <h1 className="text-lg">
-                  <b className="text-blue-600 italic">Journey Date : </b>
+                  <b className="text-blue-600">From : </b>
+                  <span className="">{from}</span>
+                </h1>
+                <h1 className="text-lg">
+                  <b className="text-blue-600">To : </b>
+                  <span className="">{to}</span>
+                </h1>
+                
+                <h1 className="text-lg">
+                  <b className="text-blue-600">Journey Date : </b>
                   <span className="">{bus.journeyDate}</span>
                 </h1>
 
                 <h1 className="text-lg">
-                  <b className="text-blue-600 italic">Price :</b> DH {bus.price}{" "}
-                  /-
+                  <b className="text-blue-600">Price :</b> {"$"}{" "}{bus.price}
+                  
                 </h1>
                 <h1 className="text-lg">
-                  <b className="text-blue-600 italic">Departure Time</b> :{" "}
-                  {moment(bus.departure, "HH:mm").format("hh:mm A")}
+                  <b className="text-blue-600">Departure Time</b> :{" "}
+                  {moment(departure, "HH:mm").format("hh:mm A")}
                 </h1>
                 <h1 className="text-lg">
-                  <b className="text-blue-600 italic">Arrival Time</b> :{" "}
-                  {moment(bus.arrival, "HH:mm").format("hh:mm A")}
+                  <b className="text-blue-600">Arrival Time</b> :{" "}
+                  {moment(arrival, "HH:mm").format("hh:mm A")}
                 </h1>
               </div>
               <hr className="border-black" />
@@ -124,7 +135,7 @@ function BookNow() {
                   <p>{bus.capacity}</p>
                 </h1>
                 <h1 className="text-lg font-bold">
-                  <span className="text-blue-600 italic">Seats Left : </span>{" "}
+                  <span className="text-blue-600">Seats Left : </span>{" "}
                   <p>{bus.capacity - bus.seatsBooked.length}</p>
                 </h1>
               </div>
@@ -132,32 +143,26 @@ function BookNow() {
 
               <div className="flex flex-col gap-2 w-48 ">
                 <h1 className="text-xl">
-                  <b className="text-blue-600 italic">Selected Seats : </b>{" "}
+                  <b className="text-blue-600">Selected Seats : </b>{" "}
                   {selectedSeats.join(", ")}
                 </h1>
                 <h1 className="text-xl mt-2 mb-3">
-                  <b className="text-blue-600 italic"> Price :</b> DH{" "}
+                  <b className="text-blue-600"> Price :</b> {"$"}{" "}
                   {bus.price * selectedSeats.length}
                 </h1>
 
-                <StripeCheckout
-                  billingAddress
-                  disabled={selectedSeats.length === 0}
-                  token={onToken}
-                  amount={bus.price * selectedSeats.length * 100}
-                  currency="MAD"
-                  stripeKey="pk_test_ZT7RmqCIjI0PqcpDF9jzOqAS"
-                >
+                
                   <button
+                    onClick={() => processBooking()}
                     className={`${
                       selectedSeats.length === 0
                         ? "animate-none cursor-not-allowed btn btn-primary py-2 px-5 rounded-full btn-disabled text-white"
-                        : "animate-bounce btn btn-primary py-2 px-5 rounded-full bg-blue-600 hover:bg-blue-800 hover:duration-300 text-white"
+                        : "btn btn-primary py-2 px-5 rounded-full bg-blue-600 hover:bg-blue-800 hover:duration-300 text-white"
                     }`}
                   >
-                    Pay Now
+                  Book Seat
                   </button>
-                </StripeCheckout>
+             
               </div>
             </Col>
             <Col lg={12} xs={24} sm={24}>

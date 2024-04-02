@@ -6,9 +6,7 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import PageTitle from "../components/PageTitle";
 import moment from "moment";
 import { useReactToPrint } from "react-to-print";
-import logo from "../assets/img/logo.png";
 import { Helmet } from "react-helmet";
-import QRCode from "react-qr-code";
 
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
@@ -29,6 +27,10 @@ function Bookings() {
           return {
             ...booking,
             ...booking.bus,
+            from: booking.from, 
+            to: booking.to, 
+            arrival: booking.arrival, 
+            departure: booking.departure, 
             key: booking._id,
             user: booking.user.name,
           };
@@ -87,13 +89,29 @@ function Bookings() {
       key: "bus",
     },
     {
+      title: "From",
+      dataIndex: "from",
+      key: "from",
+    },
+    {
+      title: "To",
+      dataIndex: "to",
+      key: "to",
+    },
+    {
       title: "Journey Date",
       dataIndex: "journeyDate",
       render: (journeyDate) => moment(journeyDate).format("DD/MM/YYYY"),
     },
+    
     {
-      title: "Journey Time",
+      title: "Departure",
       dataIndex: "departure",
+      render: (departure) => moment(departure, "HH:mm").format("hh:mm A"),
+    },
+    {
+      title: "Arrival",
+      dataIndex: "arrival",
       render: (departure) => moment(departure, "HH:mm").format("hh:mm A"),
     },
     {
@@ -172,9 +190,7 @@ function Bookings() {
                       <div className="flex-auto justify-evenly">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center my-1">
-                            <span className="mr-3 rounded-full bg-white w-8 h-8">
-                              <img alt="logo" src={logo} className="h-8 p-1" />
-                            </span>
+                            
                             <h2 className="font-medium">
                               {selectedBooking?.name}
                             </h2>
@@ -184,27 +200,28 @@ function Bookings() {
                           </div>
                         </div>
                         <div className="border-dashed border-b-2 my-5"></div>
-                        <div className="flex items-center">
-                          <div className="flex flex-col">
-                            <div className="flex-auto text-xs text-gray-400 my-1"></div>
-                            <div className="w-full flex-none text-lg text-blue-800 font-bold leading-none">
-                              From
-                            </div>
-                            <div className="text-xs">
+                        
+                      
+
+                        
+
+                        <div className="flex items-center mb-4 px-5">
+                          <div className="flex flex-col text-sm">
+                            <span className="">From</span>
+                            <div className="font-semibold">
                               {selectedBooking?.from}
                             </div>
                           </div>
-                          <div className="flex flex-col mx-auto">
-                            <img src={logo} alt="logo" className="w-20 p-1" />
-                          </div>
-                          <div className="flex flex-col ">
-                            <div className="flex-auto text-xs text-gray-400 my-1"></div>
-                            <div className="w-full flex-none text-lg text-blue-800 font-bold leading-none">
-                              To
+                          <div className="flex flex-col mx-auto text-sm"></div>
+                          <div className="flex flex-col text-sm">
+                            <span className="">To</span>
+                            <div className="font-semibold">
+                            {selectedBooking?.to}
+                              
                             </div>
-                            <div className="text-xs">{selectedBooking?.to}</div>
                           </div>
                         </div>
+
                         <div className="border-dashed border-b-2 my-5 pt-5">
                           <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -left-2"></div>
                           <div className="absolute rounded-full w-5 h-5 bg-blue-900 -mt-2 -right-2"></div>
@@ -212,7 +229,7 @@ function Bookings() {
 
                         <div className="flex items-center mb-4 px-5">
                           <div className="flex flex-col text-sm">
-                            <span className="">Depart Time</span>
+                            <span className="">Departure Time</span>
                             <div className="font-semibold">
                               {moment(
                                 selectedBooking?.departure,
@@ -224,9 +241,11 @@ function Bookings() {
                           <div className="flex flex-col text-sm">
                             <span className="">Arrival Time</span>
                             <div className="font-semibold">
-                              {moment(selectedBooking?.arrival, "HH:mm").format(
-                                "hh:mm A"
-                              )}
+                            {moment(
+                                selectedBooking?.arrival,
+                                "HH:mm"
+                              ).format("hh:mm A")}
+                              
                             </div>
                           </div>
                         </div>
@@ -240,33 +259,11 @@ function Bookings() {
                             <div className="font-semibold">
                               {selectedBooking?.price *
                                 selectedBooking?.seats.length}{" "}
-                              Dh
+                              {"$"}
                             </div>
                           </div>
                           <div className="flex flex-col mx-auto">
-                            <QRCode
-                              value={JSON.stringify({
-                                Name: selectedBooking?.user.toString(),
-                                From: selectedBooking?.from.toString(),
-                                To: selectedBooking?.to.toString(),
-                                Departure: moment(
-                                  selectedBooking?.departure,
-                                  "HH:mm"
-                                ).format("hh:mm A"),
-
-                                Arrival: moment(
-                                  selectedBooking?.arrival,
-                                  "HH:mm"
-                                ).format("hh:mm A"),
-
-                                Price:
-                                  selectedBooking?.price *
-                                  selectedBooking?.seats.length.toString(),
-                                Seats: selectedBooking?.seats.toString(),
-                                Date: selectedBooking?.journeyDate.toString(),
-                              })}
-                              size={150}
-                            />
+                          
                           </div>
 
                           <div className="flex flex-col">

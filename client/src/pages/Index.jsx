@@ -1,4 +1,4 @@
-import logo from "../assets/img/logo.png";
+import logo from "../assets/img/bussinlogo.png";
 import { Helmet } from "react-helmet";
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
@@ -47,7 +47,7 @@ function Index() {
   return (
     <>
       <Helmet>
-        <title>Easy-Booking</title>
+        <title>Bussin</title>
       </Helmet>
       <div className="h-screen flex bg-gray-900">
         <div
@@ -86,11 +86,10 @@ function Index() {
             </div>
 
             <h1 className="mb-5 text-5xl text-white font-bold ">
-              Easy-Booking
+              Bussin'
             </h1>
             <p className="mb-5 text-xl text-white">
-              is a platform that allows you to book your bus tickets online and
-              in a very easy way.
+                Let's buss. 
             </p>
             <Link
               to="/login"

@@ -16,6 +16,22 @@ const bookingSchema = new mongoose.Schema(
       type: Array,
       require: true,
     },
+    from: {
+      type: String,
+      require: true,
+    },
+    to: {
+      type: String,
+      require: true,
+    },
+    arrival: {
+      type: String,
+      require: true,
+    },
+    departure: {
+      type: String,
+      require: true,
+    },
     transactionId: {
       type: String,
       require: true,

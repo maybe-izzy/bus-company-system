@@ -33,7 +33,7 @@ function App() {
               path="/"
               element={
                 <PublicRoute>
-                  <Index />
+                  <Login />
                 </PublicRoute>
               }
             />
@@ -75,7 +75,7 @@ function App() {
             />
 
             <Route
-              path="/easy-booking"
+              path="/bussin"
               element={
                 <ProtectedRoute>
                   <Home />
@@ -93,7 +93,7 @@ function App() {
             />
 
             <Route
-              path="/book-now/:id"
+              path="/book-now/:id/:fromTime/:toTime/:fromLocation/:toLocation"
               element={
                 <ProtectedRoute>
                   <BookNow />

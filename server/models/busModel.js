@@ -11,19 +11,19 @@ const busSchema = new mongoose.Schema({
   },
   from: {
     type: String,
-    required: true,
+    required: false,
   },
   to: {
     type: String,
-    required: true,
+    required: false,
   },
-  departure: {
-    type: String,
-    required: true,
+  stops: {
+    type: Array, 
+    required: true, 
   },
-  arrival: {
-    type: String,
-    required: true,
+  stopTimes: {
+    type: Array, 
+    required: false, 
   },
   journeyDate: {
     type: String,

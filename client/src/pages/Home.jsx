@@ -4,6 +4,7 @@ import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import Bus from "../components/Bus";
 import { Row, Col, message } from "antd";
+import moment from 'moment';
 import { Helmet } from "react-helmet";
 
 function Home() {
@@ -22,6 +23,7 @@ function Home() {
         `/api/buses/get?from=${from}&to=${to}&journeyDate=${journeyDate}`
       );
       setBuses(data.data);
+      console.log("bus from: " + data.data.bus); 
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
@@ -59,8 +61,8 @@ function Home() {
                 <option value="">From</option>
                 {cities.map((data, index) => {
                   return (
-                    <option key={index} value={data.ville}>
-                      {data.ville}
+                    <option key={index} value={data.location_name}>
+                      {data.location_name}
                     </option>
                   );
                 })}
@@ -76,8 +78,8 @@ function Home() {
                 <option value="">To</option>
                 {cities.map((data, index) => {
                   return (
-                    <option key={index} value={data.ville}>
-                      {data.ville}
+                    <option key={index} value={data.location_name}>
+                      {data.location_name}
                     </option>
                   );
                 })}
@@ -86,7 +88,7 @@ function Home() {
             <Col lg={24} sm={24}>
               <input
                 className="mb-5 input input-primary bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white "
-                min={new Date().toISOString().split("T")[0]}
+                min={moment().format('YYYY-MM-DD')}
                 type="date"
                 placeholder="Date"
                 onChange={(e) => {

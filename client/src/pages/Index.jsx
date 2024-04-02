@@ -78,11 +78,6 @@ function Index() {
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md ">
             <div className="flex justify-center">
-              <img
-                className=" text-center w-20 h-20 rounded-full"
-                src={logo}
-                alt="logo"
-              />
             </div>
 
             <h1 className="mb-5 text-5xl text-white font-bold ">
@@ -116,8 +111,8 @@ function Index() {
                     <option value="">From</option>
                     {cities.map((data, index) => {
                       return (
-                        <option key={index} value={data.ville}>
-                          {data.ville}
+                        <option key={index} value={data.location_name}>
+                          {data.location_name}
                         </option>
                       );
                     })}
@@ -133,8 +128,8 @@ function Index() {
                     <option value="">To</option>
                     {cities.map((data, index) => {
                       return (
-                        <option key={index} value={data.ville}>
-                          {data.ville}
+                        <option key={index} value={data.location_name}>
+                          {data.location_name}
                         </option>
                       );
                     })}

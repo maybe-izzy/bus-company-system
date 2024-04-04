@@ -3,6 +3,7 @@ import { Form, message } from "antd";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import bussinWelcomeImage from '../assets/img/bussinWelcome.png'; 
 import { ShowLoading, HideLoading } from "../redux/alertsSlice";
 import { Helmet } from "react-helmet";
 
@@ -50,23 +51,23 @@ function Login() {
         <title>Login</title>
       </Helmet>
       <Form onFinish={onFinish} className="h-screen flex">
-        <div
-          className="hidden lg:flex w-full lg:w-3/4"
+        <div 
+          className="hidden lg:flex w-full lg:w-3/4 bg-black"
           style={{
-            backgroundSize: "cover",
-            backgroundImage: `url("https://img5.goodfon.com/wallpaper/nbig/6/6a/temsa-maraton-coach-bus.jpg")`,
+            backgroundSize: "contain",
+            backgroundImage: `url(${bussinWelcomeImage})`,
             backgroundPosition: "center center",
             backgroundRepeat: "no-repeat",
           }}
         >
           <div className="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
         </div>
-        <div className="from-gray-50 to-blue-500 bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
+        <div className="gray bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
           <div className="w-3/4 px-8 md:px-32 lg:px-24">
             <div className="flex flex-col items-center mb-10">
             
             </div>
-            <h1 className="mb-8 text-5xl text-center font-bold italic">
+            <h1 className="mb-16 text-5xl text-center font-bold italic">
               Login
             </h1>
             <Form.Item
@@ -90,7 +91,7 @@ function Login() {
                 />
                 <label
                   htmlFor="floating_email"
-                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Email address
                 </label>
@@ -118,7 +119,7 @@ function Login() {
                 />
                 <label
                   htmlFor="floating_password"
-                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Password
                 </label>

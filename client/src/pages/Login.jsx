@@ -50,24 +50,13 @@ function Login() {
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <Form onFinish={onFinish} className="h-screen flex">
-        <div 
-          className="hidden lg:flex w-full lg:w-3/4 bg-black"
-          style={{
-            backgroundSize: "contain",
-            backgroundImage: `url(${bussinWelcomeImage})`,
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <div className="flex items-center h-full w-full px-20 bg-gray-900 bg-opacity-40"></div>
-        </div>
-        <div className="gray bg-gradient-to-r flex w-full lg:w-1/2 justify-center items-center space-y-8">
-          <div className="w-3/4 px-8 md:px-32 lg:px-24">
+      <Form onFinish={onFinish}  className="flex items-center justify-center w-full h-screen bg-gradient-to-r from-zinc-800 via-zinc-400 to-zinc-100">
+        <h1></h1>
+        <div className="flex flex-col px-24 py-12 rounded-2xl bg-black bg-opacity-75 ">
+        
             <div className="flex flex-col items-center mb-10">
-            
             </div>
-            <h1 className="mb-16 text-5xl text-center font-bold italic">
+            <h1 className="mb-16 text-5xl text-white text-center font-bold">
               Login
             </h1>
             <Form.Item
@@ -85,13 +74,13 @@ function Login() {
                 <input
                   type="email"
                   name="floating_email"
-                  className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black dark:border-blue-500 dark:focus:border-blue-700 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block py-2.5 px-2.5 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-white dark:border-blue-500 dark:focus:border-blue-700 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 />
                 <label
                   htmlFor="floating_email"
-                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Email address
                 </label>
@@ -113,18 +102,18 @@ function Login() {
                 <input
                   type={passwordShown ? "text" : "password"}
                   name="floating_password"
-                  className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-black dark:border-blue-500 dark:focus:border-blue-700 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block py-2.5 px-2.5 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none text-white dark:border-blue-500 dark:focus:border-blue-700 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   required
                 />
                 <label
                   htmlFor="floating_password"
-                  className="absolute text-sm text-gray-500 dark:text-black duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-white dark:text-black duration-300 transform -translate-y-6 scale-75 top-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Password
                 </label>
                 <i
-                  className="absolute right-0 top-0 mt-3 mr-4 text-black cursor-pointer"
+                  className="absolute right-0 top-0 mt-3 mr-4 text-white cursor-pointer"
                   onClick={TogglePassword}
                 >
                   {passwordShown ? (
@@ -166,24 +155,20 @@ function Login() {
             <div className="flex justify-center mb-5">
               <button
                 type="submit"
-                className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
-              >
-                <span class="relative px-10 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                className="relative px-10 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                   Login
-                </span>
               </button>
             </div>
-            <p className="text-center text-base text-gray-600">
+            <p className="text-center text-base text-white">
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="text-blue-600 font-bold hover:text-blue-700"
+                className="a"
               >
                 Register
               </Link>
             </p>
           </div>
-        </div>
       </Form>
     </>
   );

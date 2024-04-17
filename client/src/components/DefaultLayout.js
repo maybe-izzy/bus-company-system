@@ -59,19 +59,19 @@ function DefaultLayout({ children }) {
   }
 
   return (
-    <div className="flex w-full">
-    <div className="h-screen sticky top-0 flex flex-col bg-black shadow justify-start px-5 py-0">
+    <div className="flex w-full bg-gradient-to-r from-zinc-800 via-zinc-600 to-zinc-400 ">
+    <div className="h-screen sticky top-0 flex flex-col bg-soft-black shadow justify-start px-5 py-0">
     <img
           onClick={() => navigate("/")}
           src={logo}
           alt="logo"
-          className="w-30 h-20 mt-6 rounded-full cursor-pointer"
+          className="w-30 h-20 mt-6 full cursor-pointer"
         />
       <div className="flex flex-col gap-5 justify-start mt-8">
         {menutoBeRendered.map((item, index) => (
           <button
             key={index}
-            className={`flex items-center gap-2 px-10 py-3 overflow-hidden text-white relative ${activeRoute === item.path ? "bg-gradient-to-br from-cyan-500 to-blue-500" : ""}`}
+            className={`flex items-center gap-2 px-10 py-3 overflow-hidden text-white relative ${activeRoute === item.path ? "bg-zinc-600 text-black" : ""}`}
             onClick={() => {
               if (item.path === "/logout") {
                 localStorage.clear();
@@ -88,7 +88,7 @@ function DefaultLayout({ children }) {
       </div>
     </div>
     <div className="w-full">
-      <div className="bg-black flex flex-col justify-start items-left py-2">
+      <div className="bg-soft-black flex flex-col justify-start items-left py-2">
         
         <h1 className="text-white text-base mb-0 p-0 text-center">
           <div className="mt-1">{user?.name}</div>

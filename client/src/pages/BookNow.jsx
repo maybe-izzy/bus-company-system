@@ -93,62 +93,61 @@ function BookNow() {
         {bus && (
           <Row className="m-3 p-5" gutter={[30, 30]}>
             <Col lg={12} xs={24} sm={24}>
-              <h1 className="font-extrabold text-2xl text-blue-500">
+              <h1 className="font-extrabold text-2xl text-white">
                 {bus.name}
               </h1>
               
-              <hr className="border-black" />
+              <hr className="border-blue-600" />
 
               <div className="flex flex-col gap-1 ">
                 <h1 className="text-lg">
-                  <b className="text-blue-600">From : </b>
-                  <span className="">{from}</span>
+                  <b className="text-white">From : </b>
+                  <span className="text-blue-600">{from}</span>
                 </h1>
                 <h1 className="text-lg">
-                  <b className="text-blue-600">To : </b>
-                  <span className="">{to}</span>
+                  <b className="text-white">To : </b>
+                  <span className="text-blue-600">{to}</span>
                 </h1>
                 
                 <h1 className="text-lg">
-                  <b className="text-blue-600">Journey Date : </b>
-                  <span className="">{bus.journeyDate}</span>
+                  <b className="text-white">Journey Date : </b>
+                  <p className="text-blue-600">{bus.journeyDate}</p>
                 </h1>
 
                 <h1 className="text-lg">
-                  <b className="text-blue-600">Price :</b> {"$"}{" "}{bus.price}
-                  
+                  <b className="text-white">Price :</b> <span className="text-blue-600">{"$"}{""}{bus.price}</span>
                 </h1>
                 <h1 className="text-lg">
-                  <b className="text-blue-600">Departure Time</b> :{" "}
-                  {moment(departure, "HH:mm").format("hh:mm A")}
+                  <b className="text-white">Departure Time : </b> {" "}
+                  <p className="text-blue-600">{moment(departure, "HH:mm").format("hh:mm A")}</p>
                 </h1>
                 <h1 className="text-lg">
-                  <b className="text-blue-600">Arrival Time</b> :{" "}
-                  {moment(arrival, "HH:mm").format("hh:mm A")}
+                  <b className="text-white">Arrival Time : </b> <p className="text-blue-600">{" "}
+                  {moment(arrival, "HH:mm").format("hh:mm A")}</p>
                 </h1>
               </div>
-              <hr className="border-black" />
+              <hr className="border-blue-600" />
 
               <div className="flex w-60 flex-col ">
                 <h1 className="text-lg mt-2 font-bold">
-                  <span className="text-blue-600 italic">Capacity : </span>{" "}
-                  <p>{bus.capacity}</p>
+                  <span className="text-white italic">Capacity : </span>{" "}
+                  <span className="text-blue-600">{bus.capacity}</span>
                 </h1>
                 <h1 className="text-lg font-bold">
-                  <span className="text-blue-600">Seats Left : </span>{" "}
-                  <p>{bus.capacity - bus.seatsBooked.length}</p>
+                  <span className="text-white">Seats Left : </span>{" "}
+                  <span className="text-blue-600">{bus.capacity - bus.seatsBooked.length}</span>
                 </h1>
               </div>
-              <hr className="border-black" />
+              <hr className="border-blue-600" />
 
               <div className="flex flex-col gap-2 w-48 ">
                 <h1 className="text-xl">
-                  <b className="text-blue-600">Selected Seats : </b>{" "}
-                  {selectedSeats.join(", ")}
+                  <b className="text-white">Selected Seats : </b>{" "}
+                  <p className="text-blue-600">{selectedSeats.join(", ")}</p>
                 </h1>
                 <h1 className="text-xl mt-2 mb-3">
-                  <b className="text-blue-600"> Price :</b> {"$"}{" "}
-                  {bus.price * selectedSeats.length}
+                  <b className="text-white"> Price :</b> <p className="text-blue-600">{"$"}{""}
+                  {bus.price * selectedSeats.length}</p>
                 </h1>
 
                 

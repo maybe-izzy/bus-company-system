@@ -29,21 +29,13 @@ function ForgotPassword() {
   };
   return (
     <>
-      <Helmet>
-        <title>Forgot Password</title>
-      </Helmet>
-
-      <Form onFinish={onFinish}>
-        <div className="from-gray-50 to-blue-500 bg-gradient-to-r h-screen flex items-center justify-center p-12 py-6">
-          <div className="mx-auto w-full max-w-screen-lg bg-blue-700 px-5 py-10 rounded-full">
-            <div className="grid gap-5 md:grid-cols-2 md:gap-10 lg:gap-20">
-              <div className="flex justify-center md:justify-end">
-                <img
-                  className="w-full max-w-sm rounded-full"
-                  src="https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-4652.jpg?w=2000"
-                  alt="Marketing newsletter via computer Illustration in PNG, SVG"
-                />
-              </div>
+    <Helmet>
+      <title>Forgot Password</title>
+    </Helmet>
+    <Form onFinish={onFinish}>
+    <div className="bg-gradient-to-r from-zinc-800 via-zinc-400 to-zinc-100 h-screen flex items-center justify-center p-12 py-6">
+      <div className="flex flex-col px-24 py-12 rounded-2xl bg-black bg-opacity-75">
+       
               <div className="flex items-center">
                 <div className="mx-auto md:mx-0">
                   <h3 className="text-4xl font-bold text-white">
@@ -82,20 +74,16 @@ function ForgotPassword() {
                     </div>
                   </Form.Item>
                   <div className="mt-5">
-                    <button className="relative inline-flex items-center justify-start px-10 py-3 overflow-hidden font-bold rounded-full group">
-                      <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
-                      <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-gray-100 opacity-100 group-hover:translate-x-0"></span>
-                      <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black">
+                    <button className="relative px-10 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                         Send Reset Code
-                      </span>
-                      <span className="absolute inset-0 border-2 border-blue-600 rounded-full"></span>
+
                     </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+     
       </Form>
     </>
   );

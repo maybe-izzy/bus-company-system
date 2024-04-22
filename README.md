@@ -1,8 +1,8 @@
 # Must do this before starting the software: 
 1. Create a file in the "server" directory named ".env"
 2. Paste into the file:
-EMAIL = testuser@gmail.com
-PASSWORD = testuser123
+EMAIL = montgomeryisabelle8@gmail.com
+PASSWORD = 44Ready?
 jwt_secret = secret
 PORT = 5000
 mongo_url = mongodb+srv://admin:123password@busprojectdatabase.wqutfuh.mongodb.net/?retryWrites=true&w=majority

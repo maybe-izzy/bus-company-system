@@ -25,14 +25,21 @@ function Bookings() {
       if (response.data.success) {
         const mappedData = response.data.data.map((booking) => {
           return {
+            booking_id: booking._id, 
+            user_id: booking.user._id, 
+            bus_id: booking.bus._id, 
+            user: booking.user, 
+            bus: booking.bus, 
             ...booking,
             ...booking.bus,
+            ...booking.user, 
             from: booking.from, 
             to: booking.to, 
             arrival: booking.arrival, 
             departure: booking.departure, 
-            key: booking._id,
+            booking_id: booking._id,
             user: booking.user.name,
+            user_id: booking.user._id, 
           };
         });
         setBookings(mappedData);
@@ -45,15 +52,10 @@ function Bookings() {
     }
   }, [dispatch]);
 
-  const CancelBooking = async () => {
+  const CancelBooking = async (user_id, bus_id, booking_id) => {
     try {
       dispatch(ShowLoading());
-      const res = await axiosInstance.get(
-        `/api/bookings/${localStorage.getItem("user_id")}`
-      );
-      const bus_id = res.data.data[0].bus._id;
-      const user_id = res.data.data[0].user._id;
-      const booking_id = res.data.data[0]._id;
+    
       const response = await axiosInstance.delete(
         `/api/bookings/${booking_id}/${user_id}/${bus_id}`,
         {}
@@ -136,7 +138,8 @@ function Bookings() {
           <button
             className="underline text-base text-red-500 cursor-pointer hover:text-red-700"
             onClick={() => {
-              CancelBooking();
+             //setSelectedBooking(record); 
+              CancelBooking(record.user_id, record.bus_id, record.booking_id);
             }}
           >
             Cancel
@@ -172,7 +175,7 @@ function Bookings() {
             title="Print Ticket"
             onCancel={() => {
               setShowPrintModal(false);
-              selectedBooking(null);
+             //selectedBooking(null);
             }}
             open={showPrintModal}
             okText="Print"

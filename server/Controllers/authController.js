@@ -3,7 +3,28 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const PasswordReset = require("../models/passwordResetModel");
 const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
+
+// nodemailer transporter
+let transporter = nodemailer.createTransport({
+  service: "hotmail",
+  auth: {
+    user: 'dfsdfaskjfaksdfasdf98w4r592739sdfskscf78s89f9xvxv@hotmail.com',
+    pass: 'bussin123',
+  },
+});
+
+// transporter verification
+transporter.verify((error, success) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Ready for messages");
+    console.log(success);
+  }
+});
+
 
 // register new user
 const CreateUser = async (req, res) => {
@@ -35,7 +56,6 @@ const CreateUser = async (req, res) => {
 };
 
 // login user
-
 const Login = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email: req.body.email });
@@ -120,7 +140,7 @@ const ResetPassword = async (req, res) => {
 
         // mail options
         const mailOptions = {
-          from: process.env.EMAIL,
+          from: 'dfsdfaskjfaksdfasdf98w4r592739sdfskscf78s89f9xvxv@hotmail.com',
           to: email,
           subject: "Password Reset",
           html: `

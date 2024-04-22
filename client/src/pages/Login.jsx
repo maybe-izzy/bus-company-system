@@ -168,6 +168,14 @@ function Login() {
                 Register
               </Link>
             </p>
+            <p className="text-center text-base text-gray-600">
+              <Link
+                to="/forgot-password"
+                className="text-blue-600 hover:text-blue-700"
+              >
+                Forgot Password?
+              </Link>
+            </p>
           </div>
       </Form>
     </>

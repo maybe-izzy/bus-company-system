@@ -22,6 +22,9 @@ function AdminBookings() {
       if (response.data.success) {
         const mappedData = response.data.data.map((booking) => {
           return {
+            booking_id: booking._id, 
+            user_id: booking.user._id, 
+            bus_id: booking.bus._id, 
             ...booking,
             ...booking.bus,
             key: booking._id,
@@ -36,6 +39,27 @@ function AdminBookings() {
       message.error(error.message);
     }
   }, [dispatch]);
+
+  const CancelBooking = async (user_id, bus_id, booking_id) => {
+    try {
+      dispatch(ShowLoading());
+    
+      const response = await axiosInstance.delete(
+        `/api/bookings/${booking_id}/${user_id}/${bus_id}`,
+        {}
+      );
+      dispatch(HideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        getBookings();
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
 
   const columns = [
     {
@@ -68,6 +92,24 @@ function AdminBookings() {
       title: "Seats",
       dataIndex: "seats",
       render: (seats) => seats.join(", "),
+    },
+   {
+      title: "Action",
+      dataIndex: "action",
+      render: (text, record) => (
+        <div className="flex gap-2">
+         
+          <button
+            className="underline text-base text-red-500 cursor-pointer hover:text-red-700"
+            onClick={() => {
+             //setSelectedBooking(record); 
+              CancelBooking(record.user_id, record.bus_id, record.booking_id);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      ),
     },
   ];
 
